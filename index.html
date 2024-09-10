@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leo Sokolov - Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#certifications">Certifications</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="about-container">
+            <div class="about-text">
+                <h1>Leo Sokolov</h1>
+                <p>Founder and Backend Developer of Orb | Engineering Student</p>
+                <div class="text-and-photo">
+                    <p>Hello, I'm Leo, a 19-year-old Engineering student at the University of Manchester with a strong passion for software development and startups. My journey into programming began when I received an Arduino from my dad as a child, sparking my curiosity about technology. In middle school, I ventured into game development, creating computer games on the Unity engine for my friends.</p>
+                    <div class="about-photo">
+                        <img src="images/leo-photo.png" alt="Photo of Leo Sokolov" style="border-radius: 50%;">
+                    </div>
+                </div>
+                <p>Over the years, I’ve worked on various projects, and today, I am the lead developer and founder of Orb, an app that automatically generates real-time status updates about users' friends and their whereabouts. I'm eager to further explore the world of software development, learn from industry leaders, and contribute to innovative solutions within large corporations.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Link Section -->
+    <section id="projects">
+        <h2>My Projects</h2>
+        <div class="project-cards">
+            <!-- Project Card 1: Orb -->
+            <div class="card" data-link="orb.html">
+                <img src="images/orb.png" alt="Orb Icon" class="card-icon">
+                <div class="card-content">
+                    <h3>Orb</h3>
+                    <p>Type: Mobile App</p>
+                    <p>2023 - Present</p>
+                </div>
+            </div>
+            <!-- Project Card 2: Connected Status Reporter -->
+            <div class="card" data-link="status-reporter.html">
+                <img src="images/connected-status-reporter.jpg" alt="Status Reporter Icon" class="card-icon" style="border-radius: 50%;">
+                <div class="card-content">
+                    <h3>Connected Status Reporter</h3>
+                    <p>Type: Bot</p>
+                    <p>2024</p>
+                </div>
+            </div>
+            <!-- Project Card 3: Mirrored World -->
+            <div class="card" data-link="mirrored-world.html">
+                <img src="images/mirrored-world.png" alt="Mirrored World Icon" class="card-icon" style="border-radius: 50%;">
+                <div class="card-content">
+                    <h3>Mirrored World</h3>
+                    <p>Type: Game</p>
+                    <p>2020</p>
+                </div>
+            </div>
+            <!-- Project Card 4: Chemistry Practice App -->
+            <div class="card" data-link="chemistry-app.html">
+                <img src="images/OGE.png" alt="Chemistry App Icon" class="card-icon" style="border-radius: 50%;">
+                <div class="card-content">
+                    <h3>A-Exam</h3>
+                    <p>Type: Mobile App</p>
+                    <p>2019 - 2020</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <h2>Skills</h2>
+        <ul>
+            <li>Python</li>
+            <li>C</li>
+            <li>Java</li>
+            <li>C#</li>
+            <li>Firebase</li>
+            <li>Unity</li>
+        </ul>
+    </section>
+
+    <!-- Certifications Section -->
+    <section id="certifications">
+        <h2>Certifications</h2>
+        <p>Gold Medal - National Maths Competition</p>
+        <p>A-Level Grades: A* in Mathematics, A in Further Mathematics, A in Physics</p>
+        <p>First Year University Grade: 80%</p>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2>Contact Me</h2>
+        <p>Email: <a href="mailto:sokolov.a.leonid@gmail.com">sokolov.a.leonid@gmail.com</a></p>
+        <p>Phone: +44 7503603381</p>
+        <p>LinkedIn: <a href="https://www.linkedin.com/in/leonid-sokolov-2b7133297" target="_blank">Leo Sokolov LinkedIn</a></p>
+        <p>Instagram: <a href="https://www.instagram.com/miriplexx" target="_blank">@miriplexx</a></p>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Leo Sokolov</p>
+    </footer>
+
+    <!-- JavaScript for hover and click handling -->
+    <script>
+        // Select all the cards
+        const cards = document.querySelectorAll('.card');
+
+        cards.forEach(card => {
+            // Add event listener for mouse enter
+            card.addEventListener('mouseenter', function(e) {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left; // Get X position relative to card
+                const y = e.clientY - rect.top;  // Get Y position relative to card
+
+                // Apply the mouse position to the pseudo-element using inline styles
+                card.style.setProperty('--x', `${x}px`);
+                card.style.setProperty('--y', `${y}px`);
+                
+                // Add hovered class to trigger the expansion
+                card.classList.add('hovered');
+                card.classList.remove('leaving');
+            });
+
+            // Add event listener for mouse leave
+            card.addEventListener('mouseleave', function(e) {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left; // Get X position relative to card
+                const y = e.clientY - rect.top;  // Get Y position relative to card
+
+                // Apply the mouse exit position to the pseudo-element
+                card.style.setProperty('--x', `${x}px`);
+                card.style.setProperty('--y', `${y}px`);
+                
+                // Remove hovered class and add leaving class to trigger shrinking
+                card.classList.remove('hovered');
+                card.classList.add('leaving');
+            });
+
+            // Add event listener for click to navigate to the project page
+            card.addEventListener('click', function() {
+                const link = card.getAttribute('data-link');
+                if (link) {
+                    window.location.href = link; // Navigate to the project page
+                }
+            });
+        });
+    </script>
+</body>
+</html>

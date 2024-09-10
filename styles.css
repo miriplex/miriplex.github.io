@@ -1,0 +1,201 @@
+/* Global Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1e1e1e;
+    color: #f0f0f0; /* Lighten the text color for readability */
+    line-height: 1.6; /* Add more space between lines */
+    font-size: 18px; /* Slightly increase the font size */
+}
+
+/* Header and Navigation */
+header {
+    background-color: #333;
+    padding: 20px 0; /* Increase padding for a more spacious header */
+    text-align: center;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px; /* Add more space between menu items */
+}
+
+nav ul li a {
+    color: #eaeaea;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px; /* Increase font size for readability */
+}
+
+nav ul li a:hover {
+    color: #1abc9c;
+}
+
+/* Sections */
+section {
+    padding: 30px;
+    margin: 30px auto; /* Center and space sections */
+    max-width: 900px; /* Restrict content width for better readability */
+    background-color: #2c2c2c;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+}
+
+h1, h2 {
+    color: #1abc9c;
+    font-size: 28px; /* Make headings larger */
+    margin-bottom: 20px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    margin-bottom: 15px; /* Increase spacing between list items */
+}
+
+a {
+    color: #1abc9c;
+    font-weight: bold; /* Make links more visible */
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: #eaeaea;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    font-size: 16px; /* Increase font size in the footer */
+}
+
+/* About Section */
+.about-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px;
+    margin: 30px auto;
+    max-width: 1000px;
+}
+
+.text-and-photo {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.about-photo {
+    margin-left: 20px;
+    flex-shrink: 0; /* Ensures the image doesn't shrink on smaller screens */
+}
+
+.about-photo img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+@media (max-width: 768px) {
+    .text-and-photo {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .about-photo {
+        margin: 20px 0 0 0;
+    }
+}
+
+
+/* Project Cards */
+.project-cards {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.card {
+    position: relative;
+    background-color: #2c2c2c;
+    border-radius: 8px;
+    padding: 20px;
+    width: 220px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    color: #f0f0f0;
+    overflow: hidden; /* Important to contain the hover effect */
+    cursor: pointer;
+}
+
+.card-icon {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+    z-index: 1; /* Ensure the icon stays in front */
+    position: relative;
+}
+
+.card-content h3,
+.card-content p {
+    z-index: 1; /* Ensure the text stays in front */
+    position: relative;
+    transition: color 0.6s ease-out; /* Smooth transition for text color */
+}
+
+/* Hover effect - Circle Expansion */
+.card::before {
+    content: '';
+    position: absolute;
+    top: var(--y, 50%);
+    left: var(--x, 50%);
+    width: 300%;
+    height: 300%;
+    background-color: rgba(26, 188, 156); /* Change the color to #1abc9c */
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    z-index: 0; /* Ensure the circle stays behind the content */
+    transition: transform 0.6s ease-out, top 0s, left 0s;
+}
+
+.card.hovered::before {
+    transform: translate(-50%, -50%) scale(1); /* Expands the circle */
+}
+
+.card.leaving::before {
+    transform: translate(-50%, -50%) scale(0); /* Shrinks the circle */
+}
+
+.card.hovered .card-content h3,
+.card.hovered .card-content p {
+    color: #2c2c2c; /* Matches the background color to make text blend in */
+}
+
+@media (max-width: 768px) {
+    .project-cards {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 300px;
+    }
+}
