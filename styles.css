@@ -199,3 +199,238 @@ footer {
         max-width: 300px;
     }
 }
+
+/* Gallery Styles */
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-around;
+}
+
+.gallery-image {
+    width: 30%;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+    .gallery-image {
+        width: 45%;
+    }
+}
+
+/* Global Styles for Subtitles */
+h3 {
+    font-size: 22px; /* Smaller than h1 and h2 */
+    color: #1abc9c; /* Keep the green color to maintain theme */
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+/* Lightbox Gallery */
+.lightbox-gallery {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.thumbnail {
+    width: 150px;
+    height: auto;
+    cursor: pointer;
+    border-radius: 8px;
+    margin: 10px;
+    transition: transform 0.3s ease;
+}
+
+.thumbnail:hover {
+    transform: scale(1.05);
+}
+
+/* Masonry Styles */
+.masonry {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 100px; /* Adjust for spacing */
+    margin-right: 100px;
+}
+
+.masonry-item {
+    width: calc(33.333% - 20px); /* Three columns, with some spacing */
+    margin: 10px;
+}
+
+.masonry-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.masonry-item img:hover {
+    transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+    .masonry-item {
+        width: calc(50% - 20px); /* Two columns on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .masonry-item {
+        width: calc(100% - 20px); /* Single column on very small screens */
+    }
+}
+.video-container {
+    max-width: 100%;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.video-container iframe {
+    width: 100%;
+    max-width: 640px; /* Adjust to fit the container */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* WebGL Placeholder */
+.webgl-placeholder {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.webgl-placeholder img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+/* Screenshot and Text Layout */
+.screenshot-text {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.screenshot-text img {
+    width: 50%;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    margin-right: 20px;
+}
+
+.screenshot-text .text {
+    width: 50%;
+}
+
+@media (max-width: 768px) {
+    .screenshot-text {
+        flex-direction: column;
+    }
+
+    .screenshot-text img {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .screenshot-text .text {
+        width: 100%;
+    }
+}
+
+/* Code Block Styling */
+.code-block {
+    background-color: #1e1e1e; /* Dark background */
+    color: #dcdcdc; /* Light text */
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-family: 'Courier New', Courier, monospace; /* Monospaced font */
+    font-size: 16px;
+    overflow-x: auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.code-block code {
+    color: #c5c8c6; /* Text color */
+    display: block;
+    line-height: 1.6; /* Line spacing */
+}
+
+.code-block code::before, .code-block code::after {
+    content: ''; /* Remove before/after content */
+}
+
+/* Syntax Highlighting */
+.code-block .keyword {
+    color: #569cd6; /* Keywords like 'void', 'if' */
+}
+
+.code-block .comment {
+    color: #6a9955; /* Comments in green */
+}
+
+.code-block .string {
+    color: #ce9178; /* Strings in brown/red */
+}
+
+.code-block .variable {
+    color: #9cdcfe; /* Variables in blue */
+}
+
+.screenshot-text {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.video-small {
+    width: 50%; /* Make the video take up 50% of the container */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    margin-right: 20px; /* Space between the video and text */
+}
+
+.screenshot-text .text {
+    width: 50%; /* Make the text take up the remaining 50% */
+}
+
+@media (max-width: 768px) {
+    .screenshot-text {
+        flex-direction: column;
+    }
+
+    .video-small {
+        width: 100%; /* Make the video take full width on smaller screens */
+        margin-bottom: 20px;
+    }
+
+    .screenshot-text .text {
+        width: 100%; /* Make text take full width on smaller screens */
+    }
+}
+
+/* Container for the WebGL game */
+.webgl-container {
+    position: relative;
+    width: 100%; /* Set the container width to 100% */
+    padding-bottom: 50%; /* Adjust this based on the game's aspect ratio (e.g., 50% for a square aspect ratio) */
+    overflow: hidden; /* Ensure no content bleeds out */
+}
+
+/* Iframe settings for WebGL */
+#webgl-game {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%; /* Double the width for scaling */
+    height: 200%; /* Double the height for scaling */
+    border: 0;
+    transform: scale(0.5); /* Scale down to fit */
+    transform-origin: top left; /* Ensure scaling starts from the top-left */
+}
+
+

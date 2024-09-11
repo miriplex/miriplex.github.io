@@ -19,19 +19,111 @@
         </nav>
     </header>
 
-    <!-- Project Description -->
+    <!-- Project Title and Overview -->
     <section id="project">
         <h1>Mirrored World</h1>
         <p><strong>Year:</strong> 2020</p>
-        <p><strong>Description:</strong> Mirrored World is a puzzle game created for a weekly game jam on itch.io. The game features a mirrored environment where players solve intricate puzzles by navigating mirrored pathways. The game was highly praised by the community, earning the second-highest number of downloads during the game jam, and received overwhelmingly positive reviews.</p>
-        <p><strong>Platform:</strong> Windows</p>
-        <p><strong>Tech Stack:</strong> Unity (C#)</p>
-        <p><strong>Link:</strong> <a href="https://itch.io/mirrored-world" target="_blank">Play Mirrored World on itch.io</a></p>
+        <p><strong>Overview:</strong> Mirrored World is a puzzle game developed for an itch.io weekly game jam with the theme of mirrors. Players can reflect the world and enter the mirrored version to solve puzzles and overcome obstacles. The game was inspired by Portal’s physics and the visual style of Monument Valley. The game received overwhelmingly positive reviews and took second place by downloads during the game jam.</p>
+        
+        <!-- WebGL version -->
+<h3>Playable Version (WebGL)</h3>
+<div class="webgl-container">
+    <iframe src="https://miriplex.github.io/mirrored-world-host/" id="webgl-game" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
+</div>
 
-        <!-- Screenshot -->
-        <div class="project-image">
-            <img src="images/mirrored-world-screenshot.png" alt="Screenshot of Mirrored World Game" style="width:100%; border-radius: 8px;">
-        </div>
+<script>
+    // Create an AudioContext to control sound
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+    // Initially, suspend the audio context to mute the game
+    audioContext.suspend().then(() => {
+        console.log("Audio context is muted by default.");
+    });
+
+    // Function to unmute the game when user interacts
+    function unmuteAudio() {
+        // Check if the audio context is in suspended state
+        if (audioContext.state === 'suspended') {
+            audioContext.resume().then(() => {
+                console.log("Audio context is unmuted.");
+            });
+        }
+    }
+
+    // Listen for user interaction with the iframe
+    document.getElementById('webgl-game').addEventListener('mouseenter', unmuteAudio);
+    document.addEventListener('click', unmuteAudio); // Unmute on click anywhere on the page
+    document.addEventListener('keydown', unmuteAudio); // Unmute on key press
+</script>
+
+
+
+
+        <!-- Development Journey and Challenges -->
+        <h3>Development Journey & Challenges</h3>
+        <p>The idea for Mirrored World emerged after playing Portal, which piqued my curiosity about how its portal physics worked. As I researched the topic, I came up with the concept of using similar mechanics for a mirror that could reflect reality and allow the player to step into the reflection.</p>
+
+        <p>The most challenging aspect was creating a realistic mirror effect that would pass through objects, allowing the player to interact with both the real and mirrored versions of the game world. Here’s a portion of the script responsible for handling the mirror movement and interaction with the player:</p>
+
+<div class="code-block">
+<pre><code>
+<span class="comment">// Handle mirror movement and player interaction</span>
+<span class="keyword">void</span> OnMouseDrag() {
+    mousePos = Input.mousePosition;
+    mousePos.z = Mathf.Abs(Camera.main.transform.position.z - transform.position.z);
+    finalx = Camera.main.ScreenToWorldPoint(mousePos).x - x > maxRange ? maxRange : Camera.main.ScreenToWorldPoint(mousePos).x;
+    transform.position = Vector3.Slerp(transform.position, <span class="keyword">new</span> Vector3(finalx, 0, Mir ? -55 : 15), Time.deltaTime * smooth);
+}
+
+<span class="comment">// Teleport player to the mirrored world</span>
+<span class="keyword">void</span> OnCollisionEnter(Collision col) {
+    <span class="keyword">if</span> (!Draged && col.transform.tag == <span class="string">"Player"</span>) {
+        InMirror = !InMirror; <span class="comment">// Toggle the mirrored state</span>
+        
+        <span class="keyword">float</span> x = col.transform.position.x;
+        <span class="keyword">float</span> y = col.transform.position.y;
+        <span class="keyword">float</span> z = -col.transform.position.z + transform.position.z + Copy.transform.position.z;
+
+        col.transform.position = <span class="keyword">new</span> Vector3(x, y, z);
+        Camera.main.transform.eulerAngles = InMirror ? <span class="keyword">new</span> Vector3(10, 150, 0) : <span class="keyword">new</span> Vector3(10, 30, 0);
+    }
+}
+</code></pre>
+</div>
+
+<p>Another challenge was to implement the mirror physics and teleportation mechanics, which are similar to Portal physics. The player can step through the mirror and enter the mirrored world which would differ slightly the from the real one. By moving the mirror and changing line of symmetry the player can alter reality, deforming the geometry of physical objects</p>
+
+        <!-- Video with Text -->
+<div class="screenshot-text">
+    <video controls autoplay loop muted class="video-small">
+        <source src="images/mirrored-world.mov" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div class="text">
+        <p>The effect is achieved by having two copies of the same objects: the "real" and the "reflected." Each object has a clipping mask attached that dynamically changes based on the mirror's position, causing the "real" and "reflected" geometry to appear as if they dissolve into each other. Finally, a camera follows the mirrored objects, and its image is projected onto the "mirror."</p>
+    </div>
+</div>
+
+<p>Here is the code snippet that controls how all the materials are clipped relative to the active camera. The materials use a shader that I found available for public access on the web.</p>
+
+
+        
+<div class="code-block">
+<pre><code>
+<span class="comment">// Create the RenderTexture for the mirror's reflection</span>
+<span class="keyword">void</span> Start() {
+    <span class="keyword">if</span> (cam.targetTexture != <span class="keyword">null</span>)
+        cam.targetTexture.Release();
+    cam.targetTexture = <span class="keyword">new</span> RenderTexture(Screen.width, Screen.height, 24);
+    mat.mainTexture = cam.targetTexture;
+}
+</code></pre>
+</div>
+
+
+
+        <h3>Lessons Learned</h3>
+        <p>This project deepened my understanding of portal physics, mathematics behind it and puzzle design. It was an excellent opportunity to apply technical problem-solving in a creative context. The game received overwhelmingly positive reviews and took second place by the number of downloads during the game jam.</p>
     </section>
 
     <footer>
