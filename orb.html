@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chemistry Practice App - Leo Sokolov</title>
+    <title>Orb - Leo Sokolov</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -19,43 +19,73 @@
         </nav>
     </header>
 
-    <!-- Project Description for Chemistry Practice App -->
+    <!-- Project Description for Orb -->
     <section id="project">
-        <h1>Chemistry Practice App</h1>
-        <p><strong>Year:</strong> 2019 - 2020</p>
-        <p><strong>Overview:</strong> The Chemistry Practice App was developed as a tool for Russian chemistry students to prepare for exams. It generated quizzes based on a practice book I co-authored with my chemistry teacher, focusing on key exam topics. The app allowed students to track performance, identify weak areas, and focus on improvement.</p>
+        <h1>Orb</h1>
+        <p><strong>Year:</strong> 2023 - Present</p>
+        <p><strong>Tech Stack (I was involved with):</strong> Python, Google Cloud, Firebase Real-Time data base, Firebase Authentication,  </p>
+        <p><strong>Tech Stack (I was not involved with):</strong> Flutter, Dart, Swift, XML</p>
+        <p><strong>Overview:</strong> Orb is a mobile app that automatically generates real-time status updates about users' friends and their whereabouts based on three sets of data: location, activity, and music. The app doesn't display exact locations but instead shows processed statuses like "staying at a fast food restaurant" or "running in a green area." The app updates users' statuses automatically, conserving battery by adjusting update frequency based on movement. Currently in Beta, Orb's backend is powered by Firebase for real-time data and Google Cloud for server hosting.</p>
         
+         <!-- Masonry Image Gallery -->
+        <div class="masonry">
+            <div class="masonry-item"><img src="images/orb-1.jpeg" alt="Screenshot 1"></div>
+            <div class="masonry-item"><img src="images/orb-2.jpeg" alt="Screenshot 2"></div>
+            <div class="masonry-item"><img src="images/orb-3.jpeg" alt="Screenshot 3"></div>
+            <div class="masonry-item"><img src="images/orb-4.jpeg" alt="Screenshot 3"></div>
+            <div class="masonry-item"><img src="images/orb-5.jpeg" alt="Screenshot 3"></div>
+            <div class="masonry-item"><img src="images/orb-6.jpeg" alt="Screenshot 3"></div>
+        </div>
+        
+        <p><strong>Beta Test:</strong> <a href="https://testflight.apple.com/join/cFaB3jp3">Join the Beta</a></p>
+
         <h3>Development Journey</h3>
-        <p>I initially built the app using Unity, but after realizing it was too resource-heavy, I switched to Android Studio. This reduced the app's size by ten times and significantly improved performance. In Android Studio, I integratesd a graphing library to track user performance statistics.</p>
+        <p>I developed Orb’s backend, setting up Firebase authentication and real-time database to store abstract user status information. The app’s server infrastructure runs on Google Cloud with three services: the main server, a test server, and a status reporter bot used for debugging. My main task was to design an algorithm that could analyze and process geolocation and activity data, ensuring the app displays meaningful status updates without sharing exact locations.</p>
 
-        <h3>Challenges & Solutions</h3>
-        <p>Unity was familiar but led to performance issues on mobile devices. By switching to Android Studio, I optimized the app, significantly reducing size and battery consumption. I used a graphing library to display user statistics and performance trends, helping students identify areas for improvement.</p>
-
-        <h3>Technologies Used</h3>
-        <ul>
-            <li>Unity (initial development)</li>
-            <li>Android Studio (final development)</li>
-            <li>Graphing Library for user stats</li>
-        </ul>
-
-        <h3>Lessons Learned</h3>
-        <p>This project taught me the importanc we of selecting the right platform before development. I also learned how to optimize apps for better performance and user experience.</p>
-
-        <!-- Screenshot Gallery -->
+        <h3>Challenges & Algorithm</h3>
+        <p>The biggest challenge was designing an algorithm that could interpret location data in a meaningful way, beyond just displaying the user’s coordinates. My initial approach used a 3D Gaussian function to model the probability of a user being at a specific location. However, this approach didn’t work well due to issues with time gaps between location updates and complex building geometry.</p>
+        <h4> Visualisation Of The First Algorithm </h4>
         <div class="gallery">
-            <img src="images/oge-screen1.png" alt="Chemistry App Screenshot 1" class="gallery-image">
-            <img src="images/oge-screen2.png" alt="Chemistry App Screenshot 2" class="gallery-image">
-            <img src="images/oge-screen3.png" alt="Chemistry App Screenshot 3" class="gallery-image">
-            <img src="images/oge-screen4.png" alt="Chemistry App Screenshot 4" class="gallery-image">
-            <img src="images/oge-screen5.png" alt="Chemistry App Screenshot 5" class="gallery-image">
-            <img src="images/oge-screen6.png" alt="Chemistry App Screenshot 6" class="gallery-image">
+            <img src="images/gaussian-approach.jpeg" alt="App Screenshot" class="image">
         </div>
 
-        <!-- APK Download -->
-        <p><strong>APK Download:</strong> <a href="chemistry-app.apk" download>Download Chemistry Practice App</a></p>
+        <p>To solve this, I switched to using fuzzy logic, a more flexible method that clusters data based on multiple variables such as proximity to buildings and activity level. This approach allowed the app to make more nuanced status updates, like determining whether the user is staying in a building or walking past it. Below is a snippet of the fuzzy logic system I implemented:</p>
 
+       <!-- Fuzzy Logic System Code Snippet -->
+<div class="code-block">
+    <pre><code>
+<span class="keyword">class</span> MembershipFunction:
+<span class="keyword">def</span> __init__(self, input_variable_type, full_range=(<span class="string">0</span>, <span class="string">1</span>), peak_range=(<span class="string">1</span>, <span class="string">1</span>), out_of_bounds=(<span class="string">0</span>, <span class="string">0</span>)):
+    <span class="comment"># Initialization of the membership function</span>
+    self.<span class="variable">input_variable_type</span> = <span class="variable">input_variable_type</span>
+    self.<span class="variable">range_start</span> = <span class="variable">full_range</span>[<span class="string">0</span>]
+    self.<span class="variable">range_end</span> = <span class="variable">full_range</span>[<span class="string">1</span>]
+    self.<span class="variable">peak_start</span> = <span class="variable">peak_range</span>[<span class="string">0</span>]
+    self.<span class="variable">peak_end</span> = <span class="variable">peak_range</span>[<span class="string">1</span>]
+    self.<span class="variable">out_of_bounds</span> = <span class="variable">out_of_bounds</span>
+
+<span class="keyword">def</span> compute_membership(self, <span class="variable">value</span>):
+    <span class="comment"># Compute membership value for the input</span>
+    <span class="keyword">if</span> <span class="variable">value</span> &lt; self.<span class="variable">range_start</span>:
+        <span class="keyword">return</span> self.<span class="variable">out_of_bounds</span>[<span class="string">0</span>]
+    <span class="keyword">elif</span> <span class="variable">value</span> &gt; self.<span class="variable">range_end</span>:
+        <span class="keyword">return</span> self.<span class="variable">out_of_bounds</span>[<span class="string">1</span>]
+    <span class="keyword">elif</span> self.<span class="variable">peak_start</span> &lt;= <span class="variable">value</span> &lt;= self.<span class="variable">peak_end</span>:
+        <span class="keyword">return</span> <span class="string">1</span>
+    <span class="keyword">elif</span> self.<span class="variable">range_start</span> &lt;= <span class="variable">value</span> &lt; self.<span class="variable">peak_start</span>:
+        <span class="keyword">return</span> (<span class="variable">value</span> - self.<span class="variable">range_start</span>) / (self.<span class="variable">peak_start</span> - self.<span class="variable">range_start</span>)
+    <span class="keyword">elif</span> self.<span class="variable">peak_end</span> &lt; <span class="variable">value</span> &lt;= self.<span class="variable">range_end</span>:
+        <span class="keyword">return</span> (self.<span class="variable">range_end</span> - <span class="variable">value</span>) / (self.<span class="variable">range_end</span> - self.<span class="variable">peak_end</span>)
+    </code></pre>
+</div>
+
+        <!-- Data Privacy Section -->
+        <h3>Data Privacy</h3>
+        <p>Orb processes user location data in real-time but does not store raw location points. Instead, it stores abstract statuses like "at a Cafe" or "staying in a building." This ensures privacy while still providing meaningful updates to friends. The real-time data is processed on the server, and only processed data is stored in the Firebase database.</p>
+
+        <!-- Reflection and Lessons Learned -->
         <h3>Reflection</h3>
-        <p>This project reinforced my passion for building tools that make a difference. It also deepened my understanding of app optimization and user experience design, skills I am eager to apply in larger-scale projects.</p>
+        <p>Through this project, I gained deep insights into how GPS systems work and how to design an algorithm for location-based services. I also learned about backend development with Firebase and Google Cloud, and managing user data securely. In addition, this project taught me valuable lessons about leading a team, motivating people, and navigating startup challenges.</p>
     </section>
 
     <footer>

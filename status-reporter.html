@@ -23,13 +23,70 @@
     <section id="project">
         <h1>Connected Status Reporter</h1>
         <p><strong>Year:</strong> 2024</p>
-        <p><strong>Description:</strong> A Telegram bot developed to track server updates for the Orb project, delivering real-time notifications to testers. The bot collects and analyzes data, provides location updates on OpenStreetMap, and collects user feedback for training AI models. It was developed using Python and hosted on Google Cloud Run.</p>
-        <p><strong>Tech Stack:</strong> Python, Google Cloud Run</p>
+        <p><strong>Tech Stack:</strong> Python, Google Cloud Run, Firebase, Telegram API</p>
+
+        <h3>Motivation</h3>
+        <p>The main motivation behind developing this bot was to create an easy-to-use debugging tool for the Orb app’s server-side algorithm. The bot simplifies the debugging process by notifying testers when a new chunk of data is processed and what the algorithm determines about the user’s status.</p>
+
+        <h3>Key Features</h3>
+        <ul>
+            <li><strong>Real-Time Notifications:</strong> Sends notifications when the server processes user data, determining clusters and status.</li>
+            <li><strong>Log Data & Analysis:</strong> Allows testers to turn on logging, replaying data for further analysis if issues are identified.</li>
+            <li><strong>Data Analysis & Debugging:</strong> Offers tools to rerun logs through the server's algorithm, with status updates and OpenStreetMap location links.</li>
+            <li><strong>AI Model Training:</strong> Logs user feedback for algorithm improvements and future AI training (feature currently suspended).</li>
+            <li><strong>Error Reporting:</strong> Automatically reports server errors, providing detailed tracebacks.</li>
+        </ul>
+
+        <h3>Challenges & Solutions</h3>
+        <p>Developing a tool that could keep up with Orb's complex algorithm was critical for identifying bugs and anomalies. The following snippets showcases an endpoint designed for logging data for future potential AI training:</p>
+
+        <!-- Code Block for Receiving Data -->
+        <div class="code-block">
+    <pre><code>
+<span class="comment"># Send a keyboard with status options</span>
+<span class="keyword">@app.route</span>(<span class="string">'/addDataPoint'</span>, methods=[<span class="string">'POST'</span>])
+<span class="keyword">async def</span> <span class="variable">add_data_point</span>():
+    <span class="variable">data</span> = <span class="keyword">await</span> request.json
+    <span class="variable">chat_id</span> = <span class="variable">data</span>[<span class="string">'chat_id'</span>]
+    <span class="variable">context_data</span> = <span class="variable">data</span>[<span class="string">'data'</span>]
+    <span class="keyword">await</span> bot_manager.send_place_options(<span class="variable">chat_id</span>, <span class="variable">context_data</span>)
+    <span class="keyword">return</span> <span class="string">"Notification received"</span>, <span class="string">200</span>
+    </code></pre>
+</div>
+
+
+        <p>The bot receives location data from the Orb server and immediately notifies testers via Telegram.</p>
+
+        <!-- Code Block for Logs and Analysis -->
+        <div class="code-block">
+    <pre><code>
+<span class="keyword">async def</span> <span class="variable">send_logs</span>(<span class="variable">chat_id</span>, <span class="variable">logs</span>):
+    <span class="comment"># Send log data to user with the option to analyze</span>
+    <span class="variable">keyboard</span> = [
+        [InlineKeyboardButton(<span class="string">"Analyze"</span>, callback_data=<span class="string">"analyze_logs"</span>)]
+    ]
+    <span class="variable">reply_markup</span> = InlineKeyboardMarkup(<span class="variable">keyboard</span>)
+    <span class="keyword">await</span> bot.send_message(chat_id=<span class="variable">chat_id</span>, text=<span class="variable">logs</span>, reply_markup=<span class="variable">reply_markup</span>)
+    </code></pre>
+</div>
+
+
+        <p>This snippet shows how the bot allows testers to analyze logs for troubleshooting, providing insights into the server's decision-making process.</p>
 
         <!-- Screenshot -->
         <div class="project-image">
-            <img src="images/status-reporter-screenshot.png" alt="Screenshot of Connected Status Reporter" style="width:100%; border-radius: 8px;">
+            <img src="images/bot.png" alt="Screenshot of Connected Status Reporter" style="width:100%; border-radius: 8px;">
         </div>
+
+        <h3>Lessons Learned</h3>
+        <ul>
+            <li><strong>Cloud Services:</strong> Gained hands-on experience with Google Cloud Run for hosting applications and APIs.</li>
+            <li><strong>Telegram API:</strong> Learned how to create real-time interaction and notifications through Telegram.</li>
+            <li><strong>Automation & Debugging:</strong> Developed skills in automating the debugging process, making it more efficient for teams.</li>
+        </ul>
+
+        <h3>Reflection</h3>
+        <p>This bot significantly improved the Orb development process by simplifying debugging, log analysis, and data handling. It also highlighted the importance of automating complex tasks and using tools like Telegram to streamline development workflows.</p>
     </section>
 
     <footer>
