@@ -45,8 +45,8 @@
         <h3>Challenges & Algorithm</h3>
         <p>The biggest challenge was designing an algorithm that could interpret location data in a meaningful way, beyond just displaying the user’s coordinates. My initial approach used a 3D Gaussian function to model the probability of a user being at a specific location. However, this approach didn’t work well due to issues with time gaps between location updates and complex building geometry.</p>
         <h4> Visualisation Of The First Algorithm </h4>
-        <div class="gallery">
-            <img src="images/gaussian-approach.jpeg" alt="App Screenshot" class="image">
+        <div class="project-image">
+            <img src="images/gaussian-approach.jpeg" alt="Screenshot of Connected Status Reporter" style="width:100%; border-radius: 8px;">
         </div>
 
         <p>To solve this, I switched to using fuzzy logic, a more flexible method that clusters data based on multiple variables such as proximity to buildings and activity level. This approach allowed the app to make more nuanced status updates, like determining whether the user is staying in a building or walking past it. Below is a snippet of the fuzzy logic system I implemented:</p>
