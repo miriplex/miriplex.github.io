@@ -1,69 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mirrored World - Leo Sokolov</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mirrored World — puzzle game | Leonid Sokolov</title>
+  <meta name="description" content="A Unity and C# game-jam prototype exploring mirror transformations, geometry and puzzle design.">
+  <meta name="theme-color" content="#1e1e1e">
+  <meta property="og:title" content="Mirrored World — puzzle game | Leonid Sokolov">
+  <meta property="og:description" content="A Unity and C# game-jam prototype exploring mirror transformations, geometry and puzzle design.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://miriplex.github.io/mirrored-world.html">
+  <link rel="canonical" href="https://miriplex.github.io/mirrored-world.html">
+  <link rel="stylesheet" href="portfolio.css">
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <header>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="index.html#about">About</a></li>
-                <li><a href="index.html#projects">Projects</a></li>
-                <li><a href="index.html#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <!-- Project Title and Overview -->
-    <section id="project">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header><nav aria-label="Main navigation"><a class="wordmark" href="index.html">LS<span aria-hidden="true">.</span></a><ul><li><a href="index.html#about">About</a></li><li><a href="index.html#projects">Projects</a></li><li><a href="index.html#experience">Experience</a></li><li><a href="index.html#education">Education</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav></header>
+  <main id="main"><section class="case-section legacy-project"><a class="back-link" href="index.html#earlier-work">← Earlier projects</a>
         <h1>Mirrored World</h1>
         <p><strong>Year:</strong> 2020</p>
         <p><strong>Tech Stack:</strong> Unity, Visual Studio, C#</p>
-        <p><strong>Overview:</strong> Mirrored World is a puzzle game developed for an itch.io weekly game jam with the theme of mirrors. Players can reflect the world and enter the mirrored version to solve puzzles and overcome obstacles. The game was inspired by Portal’s physics and the visual style of Monument Valley. The game received overwhelmingly positive reviews and took second place by downloads during the game jam.</p>
+        <p><strong>Overview:</strong> Mirrored World is a puzzle game developed for an itch.io weekly game jam with the theme of mirrors. Players can reflect the world and enter the mirrored version to solve puzzles and overcome obstacles. The game was inspired by Portal’s physics and the visual style of Monument Valley. During the game jam, it placed second by downloads; this was a download ranking, not a judged award.</p>
         
         <p><strong>Official Game Page:</strong> <a href="https://miriplex.itch.io/mirrored-world">itch.io</a></p>
         
         <!-- WebGL version -->
-<h3>Playable Version (WebGL - Windows only)</h3>
+<h2>Browser prototype (WebGL)</h2>
 <div class="webgl-container">
-    <iframe src="https://miriplex.github.io/mirrored-world-host/" id="webgl-game" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
+    <iframe src="https://miriplex.github.io/mirrored-world-host/" title="Mirrored World browser prototype" loading="lazy" id="webgl-game" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>
 </div>
 
-<script>
-    // Create an AudioContext to control sound
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
-    // Initially, suspend the audio context to mute the game
-    audioContext.suspend().then(() => {
-        console.log("Audio context is muted by default.");
-    });
-
-    // Function to unmute the game when user interacts
-    function unmuteAudio() {
-        // Check if the audio context is in suspended state
-        if (audioContext.state === 'suspended') {
-            audioContext.resume().then(() => {
-                console.log("Audio context is unmuted.");
-            });
-        }
-    }
-
-    // Listen for user interaction with the iframe
-    document.getElementById('webgl-game').addEventListener('mouseenter', unmuteAudio);
-    document.addEventListener('click', unmuteAudio); // Unmute on click anywhere on the page
-    document.addEventListener('keydown', unmuteAudio); // Unmute on key press
-</script>
 
 
 
 
         <!-- Development Journey and Challenges -->
-        <h3>Development Journey & Challenges</h3>
+        <h2>Development Journey & Challenges</h2>
         <p>The idea for Mirrored World emerged after playing Portal, which piqued my curiosity about how its portal physics worked. As I researched the topic, I came up with the concept of using similar mechanics for a mirror that could reflect reality and allow the player to step into the reflection.</p>
 
         <p>The most challenging aspect was creating a realistic mirror effect that would pass through objects, allowing the player to interact with both the real and mirrored versions of the game world. Here’s a portion of the script responsible for handling the mirror movement and interaction with the player:</p>
@@ -94,11 +67,11 @@
 </code></pre>
 </div>
 
-<p>Another challenge was to implement the mirror physics and teleportation mechanics, which are similar to Portal physics. The player can step through the mirror and enter the mirrored world which would differ slightly the from the real one. By moving the mirror and changing line of symmetry the player can alter reality, deforming the geometry of physical objects</p>
+<p>Another challenge was to implement the mirror physics and teleportation mechanics, which are similar to Portal physics. The player can step through the mirror and enter the mirrored world which differs slightly from the original. By moving the mirror and changing the line of symmetry the player can alter reality, deforming the geometry of physical objects.</p>
 
         <!-- Video with Text -->
 <div class="screenshot-text">
-    <video controls autoplay loop muted class="video-small">
+    <video controls loop muted playsinline preload="metadata" class="video-small">
         <source src="images/mirrored-world.mov" type="video/mp4">
         Your browser does not support the video tag.
     </video>
@@ -107,7 +80,7 @@
     </div>
 </div>
 
-<p>Here is the code snippet that controls how all the materials are clipped relative to the active camera. The materials use a shader that I found available for public access on the web.</p>
+<p>The materials use a clipping shader sourced from the web. The following excerpt creates the RenderTexture used to display the reflected camera view; the shader itself is not my original work.</p>
 
 
         
@@ -125,12 +98,9 @@
 
 
 
-        <h3>Lessons Learned</h3>
-        <p>This project deepened my understanding of portal physics, mathematics behind it and puzzle design. It was an excellent opportunity to apply technical problem-solving in a creative context. The game received overwhelmingly positive reviews and took second place by the number of downloads during the game jam.</p>
-    </section>
-
-    <footer>
-        <p>&copy; 2024 Leo Sokolov</p>
-    </footer>
+        <h2>Lessons Learned</h2>
+        <p>This project deepened my understanding of portal mechanics, the mathematics behind them and puzzle design. It was an excellent opportunity to apply technical problem-solving in a creative context. The project connected geometry and programming with an experience that players could explore.</p>
+    </section></main>
+  <footer><p>© 2026 Leonid Sokolov</p><a href="mailto:sokolov.a.leonid@gmail.com">Get in touch</a></footer>
 </body>
 </html>

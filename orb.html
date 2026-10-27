@@ -1,95 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orb - Leo Sokolov</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Orb — location-based social app | Leonid Sokolov</title>
+  <meta name="description" content="A past startup: Python backend, Firebase authentication, fuzzy-logic status processing and replay-based debugging tools.">
+  <meta name="theme-color" content="#1e1e1e">
+  <meta property="og:title" content="Orb — location-based social app | Leonid Sokolov">
+  <meta property="og:description" content="A past startup: Python backend, Firebase authentication, fuzzy-logic status processing and replay-based debugging tools.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://miriplex.github.io/orb.html">
+  <link rel="canonical" href="https://miriplex.github.io/orb.html">
+  <link rel="stylesheet" href="portfolio.css">
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <header>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="index.html#about">About</a></li>
-                <li><a href="index.html#projects">Projects</a></li>
-                <li><a href="index.html#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <!-- Project Description for Orb -->
-    <section id="project">
-        <h1>Orb</h1>
-        <p><strong>Year:</strong> 2023 - Present</p>
-        <p><strong>Tech Stack (I was involved with):</strong> Python, Google Cloud, Firebase Real-Time data base, Firebase Authentication,  </p>
-        <p><strong>Tech Stack (I was not involved with):</strong> Flutter, Dart, Swift, XML</p>
-        <p><strong>Overview:</strong> Orb is a mobile app that automatically generates real-time status updates about users' friends and their whereabouts based on three sets of data: location, activity, and music. The app doesn't display exact locations but instead shows processed statuses like "staying at a fast food restaurant" or "running in a green area." The app updates users' statuses automatically, conserving battery by adjusting update frequency based on movement. Currently in Beta, Orb's backend is powered by Firebase for real-time data and Google Cloud for server hosting.</p>
-        
-         <!-- Masonry Image Gallery -->
-        <div class="masonry">
-            <div class="masonry-item"><img src="images/orb-1.jpeg" alt="Screenshot 1"></div>
-            <div class="masonry-item"><img src="images/orb-2.jpeg" alt="Screenshot 2"></div>
-            <div class="masonry-item"><img src="images/orb-3.jpeg" alt="Screenshot 3"></div>
-            <div class="masonry-item"><img src="images/orb-4.jpeg" alt="Screenshot 3"></div>
-            <div class="masonry-item"><img src="images/orb-5.jpeg" alt="Screenshot 3"></div>
-            <div class="masonry-item"><img src="images/orb-6.jpeg" alt="Screenshot 3"></div>
-        </div>
-        
-        <p><strong>Beta Test:</strong> <a href="https://testflight.apple.com/join/cFaB3jp3">Join the Beta</a></p>
-
-        <h3>Development Journey</h3>
-        <p>I developed Orb’s backend, setting up Firebase authentication and real-time database to store abstract user status information. The app’s server infrastructure runs on Google Cloud with three services: the main server, a test server, and a status reporter bot used for debugging. My main task was to design an algorithm that could analyze and process geolocation and activity data, ensuring the app displays meaningful status updates without sharing exact locations.</p>
-
-        <h3>Challenges & Algorithm</h3>
-        <p>The biggest challenge was designing an algorithm that could interpret location data in a meaningful way, beyond just displaying the user’s coordinates. My initial approach used a 3D Gaussian function to model the probability of a user being at a specific location. However, this approach didn’t work well due to issues with time gaps between location updates and complex building geometry.</p>
-        <h4> Visualisation Of The First Algorithm </h4>
-        <div class="project-image">
-            <img src="images/gaussian-approach.jpeg" alt="Screenshot of Connected Status Reporter" style="width:100%; border-radius: 8px;">
-        </div>
-
-        <p>To solve this, I switched to using fuzzy logic, a more flexible method that clusters data based on multiple variables such as proximity to buildings and activity level. This approach allowed the app to make more nuanced status updates, like determining whether the user is staying in a building or walking past it. Below is a snippet of the fuzzy logic system I implemented:</p>
-
-       <!-- Fuzzy Logic System Code Snippet -->
-<div class="code-block">
-    <pre><code>
-<span class="keyword">class</span> MembershipFunction:
-<span class="keyword">def</span> __init__(self, input_variable_type, full_range=(<span class="string">0</span>, <span class="string">1</span>), peak_range=(<span class="string">1</span>, <span class="string">1</span>), out_of_bounds=(<span class="string">0</span>, <span class="string">0</span>)):
-    <span class="comment"># Initialization of the membership function</span>
-    self.<span class="variable">input_variable_type</span> = <span class="variable">input_variable_type</span>
-    self.<span class="variable">range_start</span> = <span class="variable">full_range</span>[<span class="string">0</span>]
-    self.<span class="variable">range_end</span> = <span class="variable">full_range</span>[<span class="string">1</span>]
-    self.<span class="variable">peak_start</span> = <span class="variable">peak_range</span>[<span class="string">0</span>]
-    self.<span class="variable">peak_end</span> = <span class="variable">peak_range</span>[<span class="string">1</span>]
-    self.<span class="variable">out_of_bounds</span> = <span class="variable">out_of_bounds</span>
-
-<span class="keyword">def</span> compute_membership(self, <span class="variable">value</span>):
-    <span class="comment"># Compute membership value for the input</span>
-    <span class="keyword">if</span> <span class="variable">value</span> &lt; self.<span class="variable">range_start</span>:
-        <span class="keyword">return</span> self.<span class="variable">out_of_bounds</span>[<span class="string">0</span>]
-    <span class="keyword">elif</span> <span class="variable">value</span> &gt; self.<span class="variable">range_end</span>:
-        <span class="keyword">return</span> self.<span class="variable">out_of_bounds</span>[<span class="string">1</span>]
-    <span class="keyword">elif</span> self.<span class="variable">peak_start</span> &lt;= <span class="variable">value</span> &lt;= self.<span class="variable">peak_end</span>:
-        <span class="keyword">return</span> <span class="string">1</span>
-    <span class="keyword">elif</span> self.<span class="variable">range_start</span> &lt;= <span class="variable">value</span> &lt; self.<span class="variable">peak_start</span>:
-        <span class="keyword">return</span> (<span class="variable">value</span> - self.<span class="variable">range_start</span>) / (self.<span class="variable">peak_start</span> - self.<span class="variable">range_start</span>)
-    <span class="keyword">elif</span> self.<span class="variable">peak_end</span> &lt; <span class="variable">value</span> &lt;= self.<span class="variable">range_end</span>:
-        <span class="keyword">return</span> (self.<span class="variable">range_end</span> - <span class="variable">value</span>) / (self.<span class="variable">range_end</span> - self.<span class="variable">peak_end</span>)
-    </code></pre>
-</div>
-
-        <!-- Data Privacy Section -->
-        <h3>Data Privacy</h3>
-        <p>Orb processes user location data in real-time but does not store raw location points. Instead, it stores abstract statuses like "at a Cafe" or "staying in a building." This ensures privacy while still providing meaningful updates to friends. The real-time data is processed on the server, and only processed data is stored in the Firebase database.</p>
-
-        <!-- Reflection and Lessons Learned -->
-        <h3>Reflection</h3>
-        <p>Through this project, I gained deep insights into how GPS systems work and how to design an algorithm for location-based services. I also learned about backend development with Firebase and Google Cloud, and managing user data securely. In addition, this project taught me valuable lessons about leading a team, motivating people, and navigating startup challenges.</p>
-    </section>
-
-    <footer>
-        <p>&copy; 2024 Leo Sokolov</p>
-    </footer>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header><nav aria-label="Main navigation"><a class="wordmark" href="index.html">LS<span aria-hidden="true">.</span></a><ul><li><a href="index.html#about">About</a></li><li><a href="index.html#projects">Projects</a></li><li><a href="index.html#experience">Experience</a></li><li><a href="index.html#education">Education</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav></header>
+  <main id="main"><section class="project-intro"><a class="back-link" href="index.html#projects">← All projects</a><p class="eyebrow">Past startup · Co-Founder & Backend Developer · July 2023–November 2024</p><h1>Orb</h1><p class="lead">A social app that translated location and activity into descriptive statuses rather than displaying friends’ exact coordinates.</p><ul class="tags" aria-label="Technologies"><li>Python</li><li>Google Cloud</li><li>Firebase Realtime Database</li><li>Firebase Authentication</li></ul></section><section class="case-section"><h2>The product and my role</h2><p>Orb combined location, activity and music information to produce statuses such as staying at a café or running in a green area. I built the Python backend, authentication and data-processing logic, and coordinated work across a three-person team. Other team members handled the mobile frontend.</p><p class="note">Orb is a past venture. Its historical beta is no longer accepting new testers.</p><div class="masonry"><a href="images/orb-1.jpeg"><img src="images/orb-1.jpeg" alt="Archived Orb mobile interface, view 1" loading="lazy"></a><a href="images/orb-2.jpeg"><img src="images/orb-2.jpeg" alt="Archived Orb mobile interface, view 2" loading="lazy"></a><a href="images/orb-3.jpeg"><img src="images/orb-3.jpeg" alt="Archived Orb mobile interface, view 3" loading="lazy"></a><a href="images/orb-4.jpeg"><img src="images/orb-4.jpeg" alt="Archived Orb mobile interface, view 4" loading="lazy"></a><a href="images/orb-5.jpeg"><img src="images/orb-5.jpeg" alt="Archived Orb mobile interface, view 5" loading="lazy"></a><a href="images/orb-6.jpeg"><img src="images/orb-6.jpeg" alt="Archived Orb mobile interface, view 6" loading="lazy"></a></div><p class="caption">Archived product screens. My contribution was the backend and status-processing logic, rather than the mobile UI.</p></section><section class="case-section"><h2>From coordinates to meaningful statuses</h2><p>My initial approach used a Gaussian function to represent the likelihood of being at a place. Irregular update intervals and complex building geometry made that approach difficult to use reliably.</p><p>I moved to fuzzy-logic rules combining information such as building proximity, movement and activity. This helped distinguish situations such as staying in a building from passing it. It was custom rule-based processing, rather than a trained machine-learning model.</p><figure><a class="image-link" href="images/gaussian-approach.jpeg" aria-label="Open full-size image: Visualisation of the early Gaussian approach to interpreting location"><img src="images/gaussian-approach.jpeg" alt="Visualisation of the early Gaussian approach to interpreting location" loading="lazy"></a><figcaption>An early exploration of location-based status inference, before the move to fuzzy logic.</figcaption></figure></section><section class="case-section"><h2>Backend and debugging tools</h2><p>I built JWT-protected APIs and used GCP/Firebase for the backend. To investigate the status algorithm, I also developed a Telegram reporter that could show inferred statuses, surface server errors and replay captured test data.</p><p>The user-facing app showed abstract statuses rather than exact locations. The separate debugging workflow supported test-data logging and replay; these are distinct from the information displayed to friends.</p><a href="status-reporter.html">Read about the Connected Status Reporter →</a></section><section class="case-section"><h2>What I learned</h2><p>The venture did not continue, but it gave me experience of translating ambiguous real-world signals into useful product behaviour, building backend services and coordinating a small team. The debugging tools were especially useful for making the algorithm’s behaviour inspectable.</p></section></main>
+  <footer><p>© 2026 Leonid Sokolov</p><a href="mailto:sokolov.a.leonid@gmail.com">Get in touch</a></footer>
 </body>
 </html>
