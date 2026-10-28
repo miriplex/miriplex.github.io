@@ -1,0 +1,10 @@
+.game-preview { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 30px; align-items: start; margin: 28px 0 40px; }
+.case-section .game-demo { margin: 0; }
+.game-demo video { width: 100%; aspect-ratio: 1876 / 1556; object-fit: contain; background: #151820; border-radius: 10px; }
+.game-demo figcaption { margin-bottom: 0; }
+.game-compatibility { min-width: 0; }
+.case-section .game-compatibility h3 { font-size: var(--text-base); margin: 0 0 14px; }
+.game-compatibility p { font-size: var(--text-base); line-height: 1.65; }
+.game-compatibility .caption { font-size: var(--text-sm); margin-top: 14px; }
+.game-compatibility .button { margin-top: 4px; }
+@media (max-width: 760px) { .game-preview { grid-template-columns: 1fr; gap: 24px; } .game-demo { max-width: 480px; } }

@@ -1,0 +1,26 @@
+/* DomiDO delivery diagram: independent builds converge on shared deployment. */
+.delivery-section h2 { margin-bottom: 24px; }
+.delivery-section .delivery-diagram { margin: 30px 0 32px; }
+.delivery-diagram figcaption { margin: 0 0 16px; font-size: var(--text-sm); color: var(--muted); }
+.delivery-builds { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.delivery-build { display: flex; flex-direction: column; padding: 22px 24px 0; border: 1px solid var(--line); border-radius: 10px; background: #fff; min-width: 0; }
+.delivery-diagram h3 { font-size: var(--text-base); line-height: 1.5; margin: 0 0 8px; letter-spacing: 0; }
+.delivery-build p { font-size: var(--text-base); margin: 0 0 20px; line-height: 1.6; }
+.delivery-output { margin-top: auto; padding: 12px 0; border-top: 1px solid var(--line); color: var(--accent); font-size: var(--text-sm); font-weight: 500; }
+.delivery-connector { position: relative; height: 45px; }
+.delivery-connector::before { content: ''; position: absolute; left: calc(25% - 6px); right: calc(25% - 6px); top: 0; height: 20px; border: solid #9aaac3; border-width: 0 2px 2px; border-radius: 0 0 5px 5px; }
+.delivery-connector span { position: absolute; top: 20px; height: 23px; left: calc(50% - 1px); border-left: 2px solid #9aaac3; }
+.delivery-connector span::after { content: ''; position: absolute; bottom: -1px; left: -5px; width: 8px; height: 8px; border: solid #9aaac3; border-width: 0 2px 2px 0; transform: rotate(45deg); }
+.delivery-deploy { border-left: 3px solid var(--accent); background: #f5f7fd; padding: 20px 24px; }
+.delivery-deploy p { margin: 0; max-width: 65ch; line-height: 1.6; }
+.delivery-decision { font-size: 1.25rem; line-height: 1.4; margin: 0 0 12px; }
+@media (max-width: 620px) {
+  .delivery-builds { grid-template-columns: 1fr; gap: 14px; padding-left: 20px; position: relative; }
+  .delivery-builds::before { content: ''; position: absolute; left: 0; top: 26px; bottom: -22px; border-left: 2px solid #9aaac3; }
+  .delivery-build { position: relative; padding: 18px 18px 0; }
+  .delivery-build::before { content: ''; position: absolute; left: -21px; top: 26px; width: 20px; border-top: 2px solid #9aaac3; }
+  .delivery-connector { height: 45px; }
+  .delivery-connector::before { left: 0; right: 50%; top: 20px; height: 0; border-width: 2px 0 0; border-radius: 0; }
+  .delivery-deploy { padding: 18px 20px; }
+  .delivery-decision { font-size: var(--text-base); }
+}
